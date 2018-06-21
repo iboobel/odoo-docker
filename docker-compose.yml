@@ -1,0 +1,23 @@
+version: '2'
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - web
+    depends_on:
+      - web
+    volumes:
+      - ./nginx/odoo-nginx.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt
+  web:
+    build: ./odoo
+    ports:
+      - 8069:8069
+      - 8072:8072
+    volumes:
+      - ./odoo/odoo.conf:/etc/odoo/odoo.conf
+      - /var/lib/odoo:/var/lib/odoo
+      - ./odoo/addons/:/mnt/extra-addons/
