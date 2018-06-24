@@ -14,10 +14,9 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
   web:
     build: ./odoo
-    ports:
-      - 8069:8069
-      - 8072:8072
     volumes:
       - ./odoo/odoo.conf:/etc/odoo/odoo.conf
-      - /var/lib/odoo:/var/lib/odoo
+      - filestore:/var/lib/odoo
       - ./odoo/addons/:/mnt/extra-addons/
+volumes:
+  filestore:
